@@ -1,0 +1,32 @@
+{
+  "name": "antiaris-transform-commonjs-modules-systemjs",
+  "version": "1.0.0",
+  "description": "Transform commonjs to systemjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antiaris/antiaris-transform-commonjs-modules-systemjs.git"
+  },
+  "keywords": [
+    "antiaris",
+    "commonjs",
+    "systemjs",
+    "transform",
+    "modules"
+  ],
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "author": "yanni4night@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/antiaris/antiaris-transform-commonjs-modules-systemjs/issues"
+  },
+  "homepage": "https://github.com/antiaris/antiaris-transform-commonjs-modules-systemjs",
+  "dependencies": {
+    "babylon": "^6.8.1"
+  }
+}
