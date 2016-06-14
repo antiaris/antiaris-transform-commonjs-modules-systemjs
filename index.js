@@ -46,7 +46,7 @@ exports.transform = (code, opts, cb) => {
             options.filename;
 
         const finalCode =
-            `System.registerDynamic('${options.moduleId}', [${depsModules}], true, function($_require, exports, module) {
+            `System.registerDynamic('${options.moduleId}', [${depsModules}], true, function(require, exports, module) {
     var define, global = this, GLOBAL = this;
 
     ${backCode}
