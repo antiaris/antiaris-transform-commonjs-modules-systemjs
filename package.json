@@ -29,5 +29,8 @@
   "dependencies": {
     "babylon": "^6.8.1",
     "lodash": "^4.13.1"
+  },
+  "devDependencies": {
+    "systemjs": "^0.19.31"
   }
 }

@@ -41,13 +41,13 @@ exports.transform = (code, opts, cb) => {
         const depsModules = deps.map(dep => ` '${dep}'`).join().slice(1);
         const backCode= code.replace(/\n/mg,'\n    ');
         const finalCode =
-`System.registerDynamic('${options.filename}', [${depsModules}], true, function(require, exports, module)){
+`System.registerDynamic('${options.filename}', [${depsModules}], true, function($_require, exports, module) {
     var define, global = this, GLOBAL = this;
 
     ${backCode}
 
     return module.exports;
-)};`;
+});`;
 
         cb(null, {
             code: finalCode,
