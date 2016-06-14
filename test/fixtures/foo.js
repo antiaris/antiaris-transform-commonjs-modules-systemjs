@@ -1,4 +1,4 @@
-var bar = require('./bar');
+var bar = require('./bar.js');
 
 module.exports = {
     foo: 45,

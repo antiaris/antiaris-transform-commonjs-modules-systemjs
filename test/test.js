@@ -22,6 +22,11 @@ describe('transform', function () {
         it('should import the right exports', function (done) {
 
             const translateDep = function (dep) {
+
+                let ext = path.extname(dep);
+                if (ext) {
+                    dep = dep.slice(0, -ext.length);
+                }
                 return path.relative(path.join(__dirname, '..'), path.join(
                     __dirname, 'fixtures', dep));
             };
