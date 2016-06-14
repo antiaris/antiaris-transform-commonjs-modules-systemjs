@@ -1,5 +1,8 @@
+var bar = require('./bar');
+
 module.exports = {
-    foo: 45
+    foo: 45,
+    bar: bar
 };
 
 

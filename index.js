@@ -33,19 +33,31 @@ exports.transform = (code, opts, cb) => {
                     let args = value.arguments.map(a => a.value).join('');
                     throw new Error(`"require(${args})" is illegal`);
                 }
-                deps.push(value.arguments[0].value);
+                deps.push(value.arguments[0]);
             }
 
             return value;
         });
 
-        const depsModules = deps.map(dep => ` '${dep}'`).join().slice(1);
-        const backCode = code.replace(/\n/mg, '\n    ');
+        let finalCode = code;
+
+        if (isFunction(options.translateDep)) {
+            for (let i = deps.length - 1; i >= 0; --i) {
+                let dep = deps[i];
+                let newId = options.translateDep(dep.value);
+                finalCode = finalCode.slice(0, dep.start) + "'" + newId + "'" + finalCode.slice(dep.end);
+                dep.value = newId;
+            }
+        }
+
+        const depsModules = deps.map(dep =>
+            ` '${dep.value}'`).join().slice(1);
+        const backCode = finalCode.replace(/\n/mg, '\n    ');
 
         const moduleId = options.moduleId ? (isFunction(options.moduleId) ? options.moduleId() : options.moduleId) :
             options.filename;
 
-        const finalCode =
+        finalCode =
             `System.registerDynamic('${options.moduleId}', [${depsModules}], true, function(require, exports, module) {
     var define, global = this, GLOBAL = this;
 
