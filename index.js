@@ -29,10 +29,11 @@ exports.transform = (code, opts, cb) => {
         JSON.stringify(ast, (key, value) => {
             if (value && 'CallExpression' === value.type && value.callee && 'require' === value.callee.name &&
                 Array.isArray(value.arguments)) {
-                if (value.arguments.length !== 1) {
+                if (value.arguments.length !== 1 || 'Literal' !== value.arguments[0].type) {
                     let args = value.arguments.map(a => a.value).join('');
                     throw new Error(`"require(${args})" is illegal`);
                 }
+
                 deps.push(value.arguments[0]);
             }
 
@@ -51,8 +52,10 @@ exports.transform = (code, opts, cb) => {
                 }
 
                 let newId = options.translateDep(dep.value);
-                finalCode = finalCode.slice(0, dep.range[0]) + "'" + newId + "'" + finalCode.slice(dep.range[1]);
-                dep.value = newId;
+                if (newId) {
+                    finalCode = finalCode.slice(0, dep.range[0]) + "'" + newId + "'" + finalCode.slice(dep.range[1]);
+                    dep.value = newId;
+                }
             }
         }
 
