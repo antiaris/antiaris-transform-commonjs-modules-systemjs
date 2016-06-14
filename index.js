@@ -14,6 +14,7 @@ const babylon = require('babylon');
 const path = require('path');
 const fs = require('fs');
 const extend = require('lodash/extend');
+const isFunction = require('lodash/isFunction');
 
 exports.transform = (code, opts, cb) => {
     const options = extend({}, opts);
@@ -39,9 +40,13 @@ exports.transform = (code, opts, cb) => {
         });
 
         const depsModules = deps.map(dep => ` '${dep}'`).join().slice(1);
-        const backCode= code.replace(/\n/mg,'\n    ');
+        const backCode = code.replace(/\n/mg, '\n    ');
+
+        const moduleId = options.moduleId ? (isFunction(options.moduleId) ? options.moduleId() : options.moduleId) :
+            options.filename;
+
         const finalCode =
-`System.registerDynamic('${options.filename}', [${depsModules}], true, function($_require, exports, module) {
+            `System.registerDynamic('${options.moduleId}', [${depsModules}], true, function($_require, exports, module) {
     var define, global = this, GLOBAL = this;
 
     ${backCode}

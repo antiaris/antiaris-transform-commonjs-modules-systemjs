@@ -19,11 +19,11 @@ global.System = System;
 describe('transform', function () {
     describe('exports', function () {
         it('should import the right exports', function (done) {
-            c2s.transformFile(__dirname + '/fixtures/foo.js', {}, function (err, result) {
+            c2s.transformFile(__dirname + '/fixtures/foo.js', {moduleId: 'foo'}, function (err, result) {
                 assert.equal(err, null);
                 fs.writeFile(__dirname + '/output/foo.js', result.code, function () {
                     require(__dirname + '/output/foo.js');
-                    System.import('foo.js').then(function (foo) {
+                    System.import('foo').then(function (foo) {
                         assert.deepEqual(foo.foo, 45);
                         assert.ok(!foo.hasOwnProperty('name'));
                     }).then(function () {
