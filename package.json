@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/antiaris/antiaris-transform-commonjs-modules-systemjs",
   "dependencies": {
-    "babylon": "^6.8.1",
+    "esprima": "^2.7.2",
     "lodash": "^4.13.1"
   },
   "devDependencies": {

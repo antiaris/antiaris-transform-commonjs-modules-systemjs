@@ -10,9 +10,9 @@
  * @since 0.1.0
  */
 'use strict';
-const babylon = require('babylon');
 const path = require('path');
 const fs = require('fs');
+const esprima = require('esprima');
 const extend = require('lodash/extend');
 const isFunction = require('lodash/isFunction');
 
@@ -20,8 +20,8 @@ exports.transform = (code, opts, cb) => {
     const options = extend({}, opts);
 
     try {
-        const ast = babylon.parse(code, {
-            sourceType: 'module'
+        const ast = esprima.parse(code, {
+            range: true
         });
 
         const deps = [];
@@ -51,7 +51,7 @@ exports.transform = (code, opts, cb) => {
                 }
 
                 let newId = options.translateDep(dep.value);
-                finalCode = finalCode.slice(0, dep.start) + "'" + newId + "'" + finalCode.slice(dep.end);
+                finalCode = finalCode.slice(0, dep.range[0]) + "'" + newId + "'" + finalCode.slice(dep.range[1]);
                 dep.value = newId;
             }
         }
