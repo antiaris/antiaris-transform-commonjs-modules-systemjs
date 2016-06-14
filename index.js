@@ -44,6 +44,12 @@ exports.transform = (code, opts, cb) => {
         if (isFunction(options.translateDep)) {
             for (let i = deps.length - 1; i >= 0; --i) {
                 let dep = deps[i];
+
+                //Fixed './' to './index'
+                if ('/' === dep.value[dep.value.length - 1]) {
+                    dep.value = dep.value + 'index';
+                }
+
                 let newId = options.translateDep(dep.value);
                 finalCode = finalCode.slice(0, dep.start) + "'" + newId + "'" + finalCode.slice(dep.end);
                 dep.value = newId;
