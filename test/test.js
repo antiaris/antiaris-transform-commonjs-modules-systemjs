@@ -11,15 +11,16 @@
  */
 const assert = require('assert');
 const c2s = require('../');
+const fs = require('fs');
 
-describe('transform', function() {
-    describe('transform', function() {
-        it('should', function(done) {
-            c2s.transformFile(__dirname + '/foo.txt', function(err, ast) {
+describe('transform', function () {
+    describe('transform', function () {
+        it('should', function (done) {
+            c2s.transformFile(__dirname + '/fixtures/foo.js', {}, function (err, result) {
                 assert.equal(err, null);
-
-                require('fs').writeFileSync('ast.json', JSON.stringify(ast, null, 2));
-                done();
+                fs.writeFile(__dirname + '/output/foo.js', result.code, function () {
+                    done();
+                })
             });
         });
     });
