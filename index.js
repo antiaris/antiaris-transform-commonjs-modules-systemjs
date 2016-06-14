@@ -74,7 +74,7 @@ exports.transform = (code, opts, cb) => {
 
         cb(null, {
             code: finalCode,
-            deps: deps
+            deps: deps.map(dep => dep.value)
         });
     } catch (err) {
         cb(err);
