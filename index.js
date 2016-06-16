@@ -16,6 +16,7 @@ const fs = require('fs');
 const esprima = require('esprima');
 const extend = require('lodash/extend');
 const isFunction = require('lodash/isFunction');
+const logger = require('antiaris-logger');
 
 exports.transform = (code, opts, cb) => {
     const options = extend({}, opts);
@@ -32,11 +33,14 @@ exports.transform = (code, opts, cb) => {
             if (value && 'CallExpression' === value.type && value.callee && 'require' === value.callee.name &&
                 Array.isArray(value.arguments)) {
                 if (value.arguments.length !== 1 || 'Literal' !== value.arguments[0].type) {
-                    let args = value.arguments.map(a => a.value).join('');
-                    throw new Error(`"require(${args})" is illegal`);
+                    let expression = code.slice(value.range[0], value.range[1]);
+                    logger.warn(`Dynamic require is not supported: "${expression}"` + (options.filename ?
+                        ` in ${options.filename}` : ''));
+                } else {
+                    deps.push(value.arguments[0]);
                 }
 
-                deps.push(value.arguments[0]);
+
             }
 
             return value;

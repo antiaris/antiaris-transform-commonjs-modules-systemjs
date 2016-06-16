@@ -18,6 +18,17 @@ const path = require('path');
 global.System = System;
 
 describe('transform', function () {
+    describe('dynamic require', function () {
+        it('should ignore dynamic require', function (done) {
+            c2s.transform('function f(a,b){ require(a() + b) }', {
+                moduleId: 'foo',
+                filename: 'foo.js'
+            }, function (err, result) {
+                assert.ok(!err);
+                done();
+            });
+        });
+    });
     describe('exports', function () {
         it('should import the right exports', function (done) {
 

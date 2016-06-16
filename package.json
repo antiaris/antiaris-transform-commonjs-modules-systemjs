@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/antiaris/antiaris-transform-commonjs-modules-systemjs",
   "dependencies": {
+    "antiaris-logger": "^1.1.0",
     "esprima": "^2.7.2",
     "lodash": "^4.13.1"
   },
