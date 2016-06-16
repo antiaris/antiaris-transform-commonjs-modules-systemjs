@@ -26,6 +26,7 @@ transform('require("./bar.js");\nmodule.exports = 43;', {
 
 ```
 
+ES2015 modules 语法将会被忽略。
 
 [npm-url]: https://npmjs.org/package/antiaris-transform-commonjs-modules-systemjs
 [downloads-image]: http://img.shields.io/npm/dm/antiaris-transform-commonjs-modules-systemjs.svg

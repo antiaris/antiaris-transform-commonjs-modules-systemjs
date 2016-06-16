@@ -31,7 +31,7 @@ describe('transform', function () {
                     __dirname, 'fixtures', dep));
             };
 
-            const files = 'foo,bar'.split(',');
+            const files = 'foo,bar,es6'.split(',');
 
             const tasks = files.map(function (file) {
                 return new Promise(function (resolve, reject) {

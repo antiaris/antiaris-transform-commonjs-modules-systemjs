@@ -4,9 +4,10 @@
  *
  * changelog
  * 2016-06-14[00:58:59]:revised
+ * 2016-06-16[12:04:42]:sourceType=module
  *
  * @author yanni4night@gmail.com
- * @version 0.1.0
+ * @version 0.1.1
  * @since 0.1.0
  */
 'use strict';
@@ -21,7 +22,8 @@ exports.transform = (code, opts, cb) => {
 
     try {
         const ast = esprima.parse(code, {
-            range: true
+            range: true,
+            sourceType: 'module'
         });
 
         const deps = [];

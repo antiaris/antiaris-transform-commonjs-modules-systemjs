@@ -1,6 +1,6 @@
 {
   "name": "antiaris-transform-commonjs-modules-systemjs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Transform commonjs to systemjs",
   "main": "index.js",
   "scripts": {
