@@ -27,7 +27,7 @@ exports.transform = (code, opts, cb) => {
             sourceType: 'module'
         });
 
-        const deps = [];
+        let deps = [];
 
         JSON.stringify(ast, (key, value) => {
             if (value && 'CallExpression' === value.type && value.callee && 'require' === value.callee.name &&
@@ -60,10 +60,12 @@ exports.transform = (code, opts, cb) => {
                 let newId = options.translateDep(dep.value);
                 if (newId) {
                     finalCode = finalCode.slice(0, dep.range[0]) + "'" + newId + "'" + finalCode.slice(dep.range[1]);
-                    dep.value = newId;
                 }
+                dep.value = newId;
             }
         }
+
+        deps = deps.filter(dep => !!dep.value);
 
         const depsModules = deps.map(dep =>
             ` '${dep.value}'`).join().slice(1);

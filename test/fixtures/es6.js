@@ -1,3 +1,4 @@
+require('fs')
 
 class Cat {
     say() {}

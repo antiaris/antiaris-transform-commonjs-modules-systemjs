@@ -14,6 +14,7 @@ const c2s = require('../');
 const fs = require('fs');
 const System = require('systemjs');
 const path = require('path');
+const isBuiltinModule = require('is-builtin-module');
 
 global.System = System;
 
@@ -34,6 +35,10 @@ describe('transform', function () {
 
             const translateDep = function (dep) {
 
+                if (isBuiltinModule(dep)) {
+                    return;
+                }
+
                 let ext = path.extname(dep);
                 if (ext) {
                     dep = dep.slice(0, -ext.length);
@@ -51,6 +56,10 @@ describe('transform', function () {
                         translateDep: translateDep
                     }, function (err, result) {
                         assert.equal(err, null);
+                        if ('es6' === file) {
+                            // Ignore builtin module
+                            assert.ok(result.deps.indexOf('fs') === -1);
+                        }
                         fs.writeFile(__dirname + `/output/${file}.js`,
                             result.code,
                             function () {
