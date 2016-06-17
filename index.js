@@ -24,6 +24,7 @@ exports.transform = (code, opts, cb) => {
     try {
         const ast = esprima.parse(code, {
             range: true,
+            tolerant: true,
             sourceType: 'module'
         });
 
