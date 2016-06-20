@@ -34,9 +34,14 @@ exports.transform = (code, opts, cb) => {
             if (value && 'CallExpression' === value.type && value.callee && 'require' === value.callee.name &&
                 Array.isArray(value.arguments)) {
                 if (value.arguments.length !== 1 || 'Literal' !== value.arguments[0].type) {
-                    let expression = code.slice(value.range[0], value.range[1]);
-                    logger.warn(`Dynamic require is not supported: "${expression}"` + (options.filename ?
-                        ` in ${options.filename}` : ''));
+                    const expression = code.slice(value.range[0], value.range[1]);
+                    const errMsg = `Dynamic require is not supported: "${expression}"` + (options.filename ?
+                        ` in ${options.filename}` : '');
+                    if (options.isStrict) {
+                        throw new Error(errMsg);
+                    } else if (!options.isSilent) {
+                        logger.warn(errMsg);
+                    }
                 } else {
                     deps.push(value.arguments[0]);
                 }

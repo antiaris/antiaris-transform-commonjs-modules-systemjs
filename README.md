@@ -9,6 +9,8 @@ import {transform, transformFile} from 'antiaris-transform-commonjs-modules-syst
 
 transform('require("./bar.js");\nmodule.exports = 43;', {
     moduleId: 'foo',
+    isStrict: true,
+    isSlient: true,
     translateDep: function(dep) {
         return path.basename(dep, '.js');
     }

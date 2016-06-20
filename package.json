@@ -1,6 +1,6 @@
 {
   "name": "antiaris-transform-commonjs-modules-systemjs",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Transform commonjs to systemjs",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/antiaris/antiaris-transform-commonjs-modules-systemjs",
   "dependencies": {
-    "antiaris-logger": "^1.1.0",
+    "antiaris-logger": "^2.0.0",
     "esprima": "^2.7.2",
     "lodash": "^4.13.1"
   },
